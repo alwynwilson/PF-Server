@@ -3,11 +3,7 @@ const userController = require('../controllers/userController')
 const projectController = require('../controllers/projectController')
 const jwtMiddleware = require('../middlewares/jwtMiddleware')
 const multerMiddleware = require('../middlewares/multerMiddleware')
-const getHomeProjects = require('../controllers/projectController')
-const allProjectsController = require('../controllers/projectController')
-const getuserProjectController = require('../controllers/projectController')
-const editProjectController = require('../controllers/projectController')
-const removeProjectController = require('../controllers/projectController')
+
 
 const router = new express.Router()
 
@@ -35,5 +31,8 @@ router.put('/project/:pid/edit',jwtMiddleware,multerMiddleware.single('projectIm
 
 //remove project
 router.delete('/project/:pid/remove',jwtMiddleware,projectController.removeProjectController)
+
+//edit proect user
+router.put('/user/edit',jwtMiddleware,multerMiddleware.single('profilePic'),userController.editProfileController)
 
 module.exports = router 
