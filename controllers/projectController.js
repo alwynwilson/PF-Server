@@ -58,3 +58,32 @@ exports.getuserProjectController = async (req,res)=>{
         res.status(401).json(err)
     }
 }
+
+//edit project
+exports.editProjectController = async (req,res)=>{
+    console.log("Inside editproject controller");
+    const {pid} = req.params
+    const {title,languages,github,websites,overview,projectImg} = req.body
+    const uploadImg = req.file?req.file.filename:projectImg
+    const userId = req.payload
+    try{
+        const updatedProject = await projects.findByIdAndUpdate({_id:pid},{title,languages,github,websites,overview,projectImg,userId},{new:true})
+        await updatedProject.save()
+        res.status(200).json(updatedProject)
+    }catch(err){
+        res.status(401).json(err)
+    }
+
+}
+
+//remove projects
+exports.removeProjectController = async (req,res)=>{
+    console.log("Inside removeProjectController");
+    const {pid} = req.params
+    try{
+        const removedProject = await projects.findByIdAndDelete({_id:pid})
+        res.status(200).json(removedProject)
+    }catch(err){
+        res.status(401).json(err)
+    }
+}

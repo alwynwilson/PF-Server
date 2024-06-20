@@ -6,6 +6,8 @@ const multerMiddleware = require('../middlewares/multerMiddleware')
 const getHomeProjects = require('../controllers/projectController')
 const allProjectsController = require('../controllers/projectController')
 const getuserProjectController = require('../controllers/projectController')
+const editProjectController = require('../controllers/projectController')
+const removeProjectController = require('../controllers/projectController')
 
 const router = new express.Router()
 
@@ -27,5 +29,11 @@ router.get('/all-Projects',jwtMiddleware,projectController.allProjectsController
 
 //user project
 router.get('/user-projects',jwtMiddleware,projectController.getuserProjectController)
+
+//edit project
+router.put('/project/:pid/edit',jwtMiddleware,multerMiddleware.single('projectImg'),projectController.editProjectController)
+
+//remove project
+router.delete('/project/:pid/remove',jwtMiddleware,projectController.removeProjectController)
 
 module.exports = router 
